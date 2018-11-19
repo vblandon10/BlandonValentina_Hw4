@@ -15,6 +15,7 @@ int main(int argc, char const *argv[])
   ofstream escribir_datos(argv[2]);
 
 // Imprimir en la terminal el caso a tratar
+//
 if (atoi(argv[1])==0)
 {
   cout << "Condiciones de fronteras Fijas" << "\n\n";
@@ -25,5 +26,17 @@ if (atoi(argv[1])==0)
 {
   cout << "Condiciones de fronteras periodicas" << "\n\n";
 }
+// se definen las variables.
+float conductividad; //* m^2/s
+conductividad = 1.62;
+
+float calorEspecifico; // J / (kg*K)
+calorEspecifico = 820;
+
+float densidad; // kg / m^3
+densidad = 2710;
+
+float coeficienteDifusion;
+coeficienteDifusion = conductividad/(calorEspecifico*densidad);
 
 }
