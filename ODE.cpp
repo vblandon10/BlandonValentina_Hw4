@@ -43,6 +43,11 @@ float derivada_vy(float vx, float vy)
 	return resultado;
 }
 
+float calcular_proyectil(float angulo)
+{ // hacer los calculos del proyectil que se dispara con cada angulo
+
+	cout << "Calculando trayectoria del proyectil a " << angulo << " grados" << endl;
+}
 
 int main(int argc, char const *argv[])
 {
