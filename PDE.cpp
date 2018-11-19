@@ -11,7 +11,7 @@ int main(int argc, char const *argv[])
 	// arg[1]=1 para condiciones periodicas
 	// arg[1]=2 para condiciones abiertas
 
-  // archivo en el que se va a scribir
+  // archivo en el que se va a escribir
   ofstream escribir_datos(argv[2]);
 
 // Imprimir en la terminal el caso a tratar
@@ -59,5 +59,46 @@ for (i = 0; i < npuntos; ++i)
     Y[i][j] = j*h;
   }
 }
+// Arreglos de la temperatura
+float presente[npuntos][npuntos];
+float futuro[npuntos][npuntos];
 
+// Asignar valores iniciales
+for (i = 0; i < npuntos; ++i)
+{
+  for (j = 0; j < npuntos; ++j)
+  {
+    if ( pow(X[i][j]-25.0, 2) + pow(Y[i][j]-25.0, 2) <= 10.0 )
+    { // Corresponde a la varilla
+      presente[i][j] = 100.0;
+      futuro[i][j] = 100.0;
+    }else
+    { // Corresponde a calcita
+      presente[i][j] = 10;
+      futuro[i][j] = 10;
+    }
+  }
+}
+
+// Si hay condiciones de frontera fijas, asignar los valores
+if (atoi(argv[1])==0)
+{
+  for (i = 0; i < npuntos; ++i)
+  {
+    presente[0][i] = 10.0; // borde superior
+    presente[npuntos-1][i] = 10.0; // borde inferior
+
+    presente[i][0] = 10.0; // borde derecho
+    presente[i][npuntos-1] = 10.0; // borde izquierdo
+
+
+    futuro[0][i] = 10.0;
+    futuro[npuntos-1][i] = 10.0;
+
+    futuro[i][0] = 10.0;
+    futuro[i][npuntos-1] = 10.0;
+
+
+  }
+}
 }
