@@ -139,6 +139,31 @@ float calcular_proyectil(float angulo)
 	return x0;
 }
 
-
 int main(int argc, char const *argv[])
-{}
+{
+
+	float angulo=45.0;
+	float x0=calcular_proyectil(angulo);
+
+
+	float distancias[7];
+
+	for (int i = 0; i < 7; ++i)
+	{
+		angulo = 10.0*(i+1);
+		distancias[i] = calcular_proyectil(angulo);
+	}
+
+	int max=6;
+	for (int i = 0; i < 7; ++i)
+	{
+		if (distancias[i] > distancias[max])
+		{
+			max = i; // encontrar angulo de maxima distancia
+		}
+	}
+
+	cout << "El angulo que genera la mayor distancia es " << (max+1)*10 << endl << endl;
+
+	return 0;
+}
