@@ -65,6 +65,59 @@ float calcular_proyectil(float angulo)
 	ofstream archivo_salida("proyectil.txt");
 }
 
+int i=0;
+do
+{
+  // calcular derivada en el punto que conozco
+  k1x = derivada_x(vx0);
+  k1y = derivada_y(vy0);
+  k1vx = derivada_vx(vx0, vy0);
+  k1vy = derivada_vy(vx0, vy0);
+
+  // calcular derivada medio paso adelante con pendiente k1
+  k2x = derivada_x(vx0 + 0.5*ht*k1vx);
+  k2y = derivada_y(vy0 + 0.5*ht*k1vy);
+  k2vx = derivada_vx(vx0 + 0.5*ht*k1vx, vy0 + 0.5*ht*k1vy);
+  k2vy = derivada_vy(vx0 + 0.5*ht*k1vx, vy0 + 0.5*ht*k1vy);
+
+  // calcular derivada medio paso adelante con pendiente k2
+  k3x = derivada_x(vx0 + 0.5*ht*k2vx);
+  k3y = derivada_y(vy0 + 0.5*ht*k2vy);
+  k3vx = derivada_vx(vx0 + 0.5*ht*k2vx, vy0 + 0.5*ht*k2vy);
+  k3vy = derivada_vy(vx0 + 0.5*ht*k2vx, vy0 + 0.5*ht*k2vy);
+
+  // calcular derivada un paso adelante con pendiente k3
+  k4x = derivada_x(vx0 + 1.0*ht*k3vx);
+  k4y = derivada_y(vy0 + 1.0*ht*k3vy);
+  k4vx = derivada_vx(vx0 + 1.0*ht*k3vx, vy0 + 1.0*ht*k3vy);
+  k4vy = derivada_vy(vx0 + 1.0*ht*k3vx, vy0 + 1.0*ht*k3vy);
+
+  // Calcular la pendiente a partir de las 4ks
+  pendientex = (1.0*k1x + 2.0*k2x + 2.0*k3x + 1.0*k4x)/6.0;
+  pendientey = (1.0*k1y + 2.0*k2y + 2.0*k3y + 1.0*k4y)/6.0;
+  pendientevx = (1.0*k1vx + 2.0*k2vx + 2.0*k3vx + 1.0*k4vx)/6.0;
+  pendientevy = (1.0*k1vy + 2.0*k2vy + 2.0*k3vy + 1.0*k4vy)/6.0;
+
+  // Actualizar sitema un paso de tiempo
+  x1 = x0 + pendientex*ht;
+  y1 = y0 + pendientey*ht;
+  vx1 = vx0 + pendientevx*ht;
+  vy1 = vy0 + pendientevy*ht;
+
+
+  archivo_salida << x0 << " " << vx0 << " " << y0 << " " << vy0 << endl;
+
+  // Guardar los valores del futuro (1) en el pasado(1) para preparar
+  // la siguiente iteracion
+  x0 = x1;
+  y0 = y1;
+  vx0 = vx1;
+  vy0 = vy1;
+
+  i=i+1;
+
+}
+
 int main(int argc, char const *argv[])
 {
 
