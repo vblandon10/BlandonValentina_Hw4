@@ -27,6 +27,15 @@ float derivada_vx(float vx, float vy)
 	resultado = -c*(norma_v*norma_v/m)*(vx/norma_v);
 	return resultado;
 }
+
+float derivada_vy(float vx, float vy)
+{ // Funcion que devulve la derivada de la velocidad y
+
+	// coeficiente de friccion c, gravedad y masa. todo en SI
+	float c=0.2, g=10, m=0.2;
+}
+
+
 int main(int argc, char const *argv[])
 {
 
