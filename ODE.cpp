@@ -47,6 +47,14 @@ float calcular_proyectil(float angulo)
 { // hacer los calculos del proyectil que se dispara con cada angulo
 
 	cout << "Calculando trayectoria del proyectil a " << angulo << " grados" << endl;
+  float angulor = angulo/180*3.14159;
+  // paso de tiempo, tiempo total
+  float ht=0.0002;
+  // x,y,vx,vy en el pasado 0 y en el futuro 1
+	float x0=0.0, x1;
+	float y0=0.0, y1;
+	float vx0=300*cos(angulor), vx1;
+	float vy0=300*sin(angulor), vy1;
 }
 
 int main(int argc, char const *argv[])
