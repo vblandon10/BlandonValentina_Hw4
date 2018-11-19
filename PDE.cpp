@@ -101,4 +101,26 @@ if (atoi(argv[1])==0)
 
   }
 }
+
+int indice_tiempo;
+int pasos_de_tiempo;
+pasos_de_tiempo = 1000;
+float diferencial_tiempo = 0.1*pow(h,2)/coeficienteDifusion;
+
+for (indice_tiempo = 0; indice_tiempo < pasos_de_tiempo; ++indice_tiempo)
+{
+
+  // recorrido en los puntos de la calcita
+  for (i = 1; i < npuntos-1; ++i)
+  {
+    for (j = 1; j < npuntos-1; ++j)
+    {
+      if ( pow(X[i][j]-25.0, 2) + pow(Y[i][j]-25.0, 2) >= 10.0 )
+      { // Corresponde a la calcita
+        futuro[i][j] = presente[i][j] + coeficienteDifusion*diferencial_tiempo/pow(h,2) * (presente[i-1][j] + presente[i+1][j] - 4.0*presente[i][j] + presente[i][j-1] + presente[i][j+1]);
+        //futuro[i][j] = presente[i][j] + 0.1* (presente[i-1][j] + presente[i+1][j] - 4.0*presente[i][j] + presente[i][j-1] + presente[i][j+1]);
+      }
+    }
+  }
+}
 }
