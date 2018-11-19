@@ -118,8 +118,7 @@ for (indice_tiempo = 0; indice_tiempo < pasos_de_tiempo; ++indice_tiempo)
       if ( pow(X[i][j]-25.0, 2) + pow(Y[i][j]-25.0, 2) >= 10.0 )
       { // Corresponde a la calcita
         futuro[i][j] = presente[i][j] + coeficienteDifusion*diferencial_tiempo/pow(h,2) * (presente[i-1][j] + presente[i+1][j] - 4.0*presente[i][j] + presente[i][j-1] + presente[i][j+1]);
-        //futuro[i][j] = presente[i][j] + 0.1* (presente[i-1][j] + presente[i+1][j] - 4.0*presente[i][j] + presente[i][j-1] + presente[i][j+1]);
-      }
+
     }
   }
 }
@@ -138,4 +137,44 @@ if (atoi(argv[1])==1)
     futuro[npuntos-1][i] = futuro[npuntos-2][i];
   }
 }
+else if (atoi(argv[1])==2)
+{ // "Condiciones de fronteras periodicas"
+  // Los nodos a la derecha de los nodos del borde derecho son los nodos del borde izquierdo y viceverza
+  // Los nodos arriba de los nodos del borde superior son los nodos del borde inferior y viceverza
+  for (i = 1; i < npuntos-1; ++i)
+  {
+    futuro[i][0] = presente[i][0] + coeficienteDifusion*diferencial_tiempo/pow(h,2) * (presente[i-1][0] + presente[i+1][0] - 4.0*presente[i][0] + presente[i][npuntos-1] + presente[i][0+1]);
+    futuro[i][npuntos-1] = presente[i][npuntos-1] + coeficienteDifusion*diferencial_tiempo/pow(h,2) * (presente[i-1][npuntos-1] + presente[i+1][npuntos-1] - 4.0*presente[i][npuntos-1] + presente[i][npuntos-1-1] + presente[i][0]);
+
+    futuro[0][i] = presente[0][i] + coeficienteDifusion*diferencial_tiempo/pow(h,2) * (presente[npuntos-1][i] + presente[0+1][i] - 4.0*presente[0][i] + presente[0][i-1] + presente[0][i+1]);
+    futuro[npuntos-1][i] = presente[npuntos-1][i] + coeficienteDifusion*diferencial_tiempo/pow(h,2) * (presente[npuntos-2][i] + presente[0][i] - 4.0*presente[npuntos-1][i] + presente[npuntos-1][i-1] + presente[npuntos-1][i+1]);
+  }
+
+  // calcular las esquinas
+  futuro[0][0] = presente[0][0] + coeficienteDifusion*diferencial_tiempo/pow(h,2) * (presente[npuntos-1][0] + presente[0+1][0] - 4.0*presente[0][0] + presente[0][npuntos-1] + presente[0][0+1]);
+  futuro[npuntos-1][0] = presente[npuntos-1][0] + coeficienteDifusion*diferencial_tiempo/pow(h,2) * (presente[npuntos-2][0] + presente[0][0] - 4.0*presente[npuntos-1][0] + presente[npuntos-1][npuntos-1] + presente[npuntos-1][0+1]);
+  futuro[0][npuntos-1] = presente[0][npuntos-1] + coeficienteDifusion*diferencial_tiempo/pow(h,2) * (presente[npuntos-1][npuntos-1] + presente[0+1][npuntos-1] - 4.0*presente[0][npuntos-1] + presente[0][npuntos-2] + presente[0][0]);
+  futuro[npuntos-1][npuntos-1] = presente[npuntos-1][npuntos-1] + coeficienteDifusion*diferencial_tiempo/pow(h,2) * (presente[npuntos-2][npuntos-1] + presente[0][npuntos-1] - 4.0*presente[npuntos-1][npuntos-1] + presente[npuntos-1][npuntos-2] + presente[npuntos-1][0]);
+}
+// Actualizar sistema
+for (i = 0; i < npuntos; ++i)
+{
+  for (j = 0; j < npuntos; ++j)
+  {
+    presente[i][j] = futuro[i][j];
+  }
+}
+
+
+// exportar datos
+for (i = 0; i < npuntos; ++i)
+{
+  for (j = 0; j < npuntos; ++j)
+  {
+    escribir_datos << futuro[i][j] << " ";
+  }
+  escribir_datos << "\n";
+}
+
+return 0;
 }
