@@ -123,4 +123,19 @@ for (indice_tiempo = 0; indice_tiempo < pasos_de_tiempo; ++indice_tiempo)
     }
   }
 }
+// recorrido en los puntos de los bordes
+// dependiendo de las condiciones de frontera el recorrido es diferente
+// Si son condiciones de frontera fijas, no hay que hacer nada mas
+if (atoi(argv[1])==1)
+{ // Condiciones de fronteras Abiertas
+  // La derivada espacial en los bordes es 0
+  for (i = 0; i < npuntos; ++i)
+  {
+    futuro[i][0] = futuro[i][1]; // El borde de arriba (0) toma el valor de los nodos mas cercanos (1)
+    futuro[i][npuntos-1] = futuro[i][npuntos-2];
+
+    futuro[0][i] = futuro[1][i]; // El borde de la izquierda (0) toma el valor de los nodos mas cercanos (1)
+    futuro[npuntos-1][i] = futuro[npuntos-2][i];
+  }
+}
 }
