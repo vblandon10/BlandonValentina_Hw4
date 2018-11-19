@@ -27,3 +27,14 @@ i1=-1
 plot(proyectiles[i0:i1,0], proyectiles[i0:i1,2], label=str(70))
 legend(loc='best')
 savefig('proyectiles.png')
+
+## Graficas PDE
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+
+def promedio_temperatura(M, total_instantes, n):
+	# calcula promedios de total_instantes matrices nxn
+	promedio = np.zeros((int(total_instantes),1))
+	for i in range(int(total_instantes)):
+		promedio[i] = np.sum(np.sum( M[i*n:(i+1)*n] ))/(n**2)
+	return promedio
