@@ -55,6 +55,14 @@ float calcular_proyectil(float angulo)
 	float y0=0.0, y1;
 	float vx0=300*cos(angulor), vx1;
 	float vy0=300*sin(angulor), vy1;
+
+  // Crear 4ks por cada variable y una variable para la pendiente de cada variable
+	float pendientex=0.0, k1x=0.0, k2x=0.0, k3x=0.0, k4x=0.0;
+	float pendientey=0.0, k1y=0.0, k2y=0.0, k3y=0.0, k4y=0.0;
+	float pendientevx=0.0, k1vx=0.0, k2vx=0.0, k3vx=0.0, k4vx=0.0;
+	float pendientevy=0.0, k1vy=0.0, k2vy=0.0, k3vy=0.0, k4vy=0.0;
+
+	ofstream archivo_salida("proyectil.txt");
 }
 
 int main(int argc, char const *argv[])
